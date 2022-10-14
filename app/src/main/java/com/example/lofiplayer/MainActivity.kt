@@ -1,7 +1,9 @@
 package com.example.lofiplayer
 
+import android.content.Context
 import android.content.res.AssetManager
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -34,8 +36,41 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.lofiplayer.ui.theme.LofiPlayerTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+// Spotify Imports
+import com.spotify.android.appremote.api.ConnectionParams;
+import com.spotify.android.appremote.api.Connector;
+import com.spotify.android.appremote.api.SpotifyAppRemote;
+
+import com.spotify.protocol.client.Subscription;
+import com.spotify.protocol.types.PlayerState;
+import com.spotify.protocol.types.Track;
+
+
+var spotifyAppRemote: SpotifyAppRemote? = null;
 
 class MainActivity : ComponentActivity() {
+
+    fun connect(): SpotifyApp{
+        val clientId = "a9fa0def4cb4447293df558341852aa3";
+        val redirectUrl = "https://open.spotify.com/";
+        val connectionParams = ConnectionParams.Builder(clientId)
+            .setRedirectUri(redirectUrl)
+            .showAuthView(true)
+            .build();
+        println(connectionParams)
+        SpotifyAppRemote.connect(applicationContext, connectionParams, object:
+            Connector.ConnectionListener{
+                override fun onConnected(appRemote: SpotifyAppRemote?) {
+                    spotifyAppRemote = appRemote
+                }
+
+                override fun onFailure(error: Throwable?) {
+                    println("Failed!")
+                }
+            }
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -48,7 +83,7 @@ class MainActivity : ComponentActivity() {
                         darkIcons = true
                     )
                 }
-
+                this.connect();
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -66,6 +101,16 @@ var playingStat = "Paused"
 var radname = "Star wars Lofi"
 var stat = "Connected"
 var primStat = 0
+
+fun connect(): SpotifyAppRemote{
+    val clientId = "a9fa0def4cb4447293df558341852aa3";
+    val redirectUrl = "https://open.spotify.com/";
+    val connectionParams = ConnectionParams.Builder(clientId)
+        .setRedirectUri(redirectUrl)
+        .showAuthView(true)
+        .build();
+    println(connectionParams)
+}
 
 @Composable
 fun mainUI(){
