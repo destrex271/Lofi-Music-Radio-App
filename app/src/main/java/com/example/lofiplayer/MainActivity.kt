@@ -93,9 +93,9 @@ var stat = mutableStateOf("Connected")
 var symbol = mutableStateOf(">")
 var primStat = 0
 var choice = mutableStateOf(0)
-// val url = "https://cdnsongs.com/music/data/Single_Track/202211/Her/128/Her_1.mp3"
+val url = "https://cdnsongs.com/music/data/Single_Track/202211/Her/128/Her_1.mp3"
 var urls = HashMap<String, String>();
-val url = "https://res.cloudinary.com/ds7xs3pq1/video/upload/v1669931787/X2Download.app_-_Darth_Vader_s_Lofi_beats_to_relax_study_to___Star_Wars_Lofi_Chill_Mix_256_kbps_stx51q.mp3"
+// val url = "https://res.cloudinary.com/ds7xs3pq1/video/upload/v1669931787/X2Download.app_-_Darth_Vader_s_Lofi_beats_to_relax_study_to___Star_Wars_Lofi_Chill_Mix_256_kbps_stx51q.mp3"
 var mediaPlayer : MediaPlayer = MediaPlayer();
 
 @Composable
@@ -151,7 +151,7 @@ fun content(){
         modifier = imgModifier,
         alpha = 0.3999F
     )
-}
+}   
 @Composable
 fun body(head: FontFamily, body: FontFamily){
     Column(
